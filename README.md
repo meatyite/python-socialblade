@@ -1,6 +1,7 @@
 # Socialblade API wrapper
 Socialblade API wrapper. <br/>
-[*THIS DOESN'T WORK ANYMORE*](https://github.com/sl4vkek/python-socialblade/issues/3) *FIND ANOTHER PACKAGE, THIS ISNT WORKING BECAUSE OF CLOUDFLARE DAMNIT*
+[*THIS DOESN'T WORK ANYMORE*](https://github.com/sl4vkek/python-socialblade/issues/3) *FIND ANOTHER PACKAGE, THIS ISNT WORKING BECAUSE OF CLOUDFLARE DAMNIT* <br/>
+*FUCK YOU CLOUDFLARE*
 ## Examples
 ### Live YouTube subscriber count
 Prints PewDiePie's subscriber count in real time.
