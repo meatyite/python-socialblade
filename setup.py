@@ -1,13 +1,13 @@
-from distutils.core import setup
+from setuptools import setup
 
 setup(name='socialblade',
-      version='1.0.1',
+      version='1.0.2',
       description='Object oriented SocialBlade API wrapper',
-      long_description=open('README.rst', 'rb').read().decode(),
+      long_description=open('README.rst', 'r').read() ,
       author='sl4v',
       author_email='iamsl4v@protonmail.com',
       url='https://github.com/sl4vkek/python-socialblade',
       packages=['socialblade'],
-      install_requires=['requests', 'dateparser'],
+      install_requires=['cloudscraper', 'dateparser'],
       license="WTFPL"
      )

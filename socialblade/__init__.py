@@ -1,4 +1,4 @@
-import requests
+import cloudscraper
 import json
 import dateparser
 from time import sleep
@@ -8,14 +8,14 @@ class TwitterUser:
 
     def __init__(self, tag):
         self.tag = tag
-        self.__s = requests.Session()
+        self.__s = cloudscraper.create_scraper()
 
     def get_follower_count(self):
         """
         :return: The twitter user's follower count
         """
         return int(
-            requests.get(
+            self.__s.get(
                 'https://bastet.socialblade.com/twitter/lookup',
                 params={
                     'query': self.tag
@@ -51,7 +51,7 @@ class YouTubeChannel:
 
     def __init__(self, channel_id):
         self.channel_id = channel_id
-        self.__s = requests.Session()
+        self.__s = cloudscraper.create_scraper()
 
     @staticmethod
     def __add_videos(videos):
