@@ -90,7 +90,7 @@ donald_trump_twitter = TwitterUser('realdonaldtrump')
 print(donald_trump_twitter.get_follower_count())
 ```
 ### Get live Twitch and StoryFire follower counts
-Like Twiiter, Twitch and StoryFire functionality is also limited to retrieving follower counts.
+Like Twitter, Twitch and StoryFire functionality is also limited to retrieving follower counts.
 You could compare the follower counts of a user's multiple platforms, whether that be Twitch and Twitter...:
 ```python
 from socialblade import TwitterUser, TwitchUser
