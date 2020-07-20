@@ -1,6 +1,6 @@
 # Socialblade API wrapper
 Socialblade API wrapper. <br/>
-***PROBLEM WITH CLOUDFLARE WAS FIXED***
+***Added Twitch and StoryFire support***
 ## Examples
 ### Live YouTube subscriber count
 Prints PewDiePie's subscriber count in real time.
