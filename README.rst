@@ -1,4 +1,3 @@
-
 Socialblade API wrapper
 =======================
 
@@ -8,11 +7,11 @@ Examples
 --------
 
 Live YouTube subscriber count
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Prints PewDiePie's subscriber count in real time.
 
-.. code-block::
+.. code:: python
 
    from socialblade import YouTubeChannel
 
@@ -22,9 +21,10 @@ Prints PewDiePie's subscriber count in real time.
    for sub in pewdiepie_channel.live_subscriber_count_generator():
        print(sub)
 
-You could also just get the subscriber count as it is at the time, like this:
+You could also just get the subscriber count as it is at the time, like
+this:
 
-.. code-block::
+.. code:: python
 
    from socialblade import YouTubeChannel
 
@@ -34,11 +34,12 @@ You could also just get the subscriber count as it is at the time, like this:
    print(pewdiepie_channel.get_subscriber_count())
 
 Export a Channel's Most Viewed Videos Statistics to CSV
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-In this example we are exporting statistics about PewDiePie's most viewed videos to CSV.
+In this example we are exporting statistics about PewDiePie's most
+viewed videos to CSV.
 
-.. code-block::
+.. code:: python
 
    from socialblade import YouTubeChannel
    import csv
@@ -77,21 +78,23 @@ In this example we are exporting statistics about PewDiePie's most viewed videos
            ]
        )
 
-You could do the same thing to any channel. You could also export different types of statistics about videos, which I will list the functions for them here:
+You could do the same thing to any channel. You could also export
+different types of statistics about videos, which I will list the
+functions for them here:
 
-
-* socialblade.YouTubeChannel(channel_id).get_latest_videos()
-* socialblade.YouTubeChannel(channel_id).get_most_viewed_videos()
-* socialblade.YouTubeChannel(channel_id).get_highest_rated_videos()
-* socialblade.YouTubeChannel(channel_id).get_most_relevant_videos()
+-  socialblade.YouTubeChannel(channel_id).get_latest_videos()
+-  socialblade.YouTubeChannel(channel_id).get_most_viewed_videos()
+-  socialblade.YouTubeChannel(channel_id).get_highest_rated_videos()
+-  socialblade.YouTubeChannel(channel_id).get_most_relevant_videos()
 
 Get live Twitter follower count
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The twitter functionality is limited in this wrapper to retrieving follower counts.
-You could get a twitter users live follower count similer to how you get a youtuber's live follower count:
+The Twitter functionality is limited in this wrapper to retrieving
+follower counts. You could get a Twitter user's live follower count
+similer to how you get a youtuber's live follower count:
 
-.. code-block::
+.. code:: python
 
    from socialblade import TwitterUser
 
@@ -103,7 +106,7 @@ You could get a twitter users live follower count similer to how you get a youtu
 
 You could also get the follower count as it is at the moment, like so:
 
-.. code-block::
+::
 
    from socialblade import TwitterUser
 
@@ -111,3 +114,42 @@ You could also get the follower count as it is at the moment, like so:
    donald_trump_twitter = TwitterUser('realdonaldtrump')
 
    print(donald_trump_twitter.get_follower_count())
+
+Get live Twitch and StoryFire follower counts
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Like Twitter, Twitch and StoryFire functionality is also limited to
+retrieving follower counts. You could compare the follower counts of a
+user's multiple platforms, whether that be Twitch and Twitter...:
+
+.. code:: python
+
+   from socialblade import TwitterUser, TwitchUser
+
+
+   user = 'michaelreeves'
+
+   reeves_twitter = TwitterUser(user)
+   reeves_twitch = TwitchUser(user)
+
+   twitter_followers = reeves_twitter.get_follower_count()
+   twitch_followers = reeves_twitch.get_follower_count()
+
+   if twitter_followers > twitch_followers:
+       print(f"{user} has {twitter_followers - twitch_followers} more followers on Twitch than on Twitter.")
+   else:
+       print(f"{user} has {twitch_followers - twitter_followers} more followers on Twitter than on Twitch.")
+
+...or StoryFire and YouTube:
+
+.. code:: python
+
+   from socialblade import YouTubeChannel, StoryFireUser
+
+
+   rgt_youtube = YouTubeChannel('UCA5RGaQc-a8tIX_AqTTmWdw')
+   rgt_storyfire = StoryFireUser('1fozx1kcs0tuj3')
+
+   for sf_subscribers in rgt_storyfire.live_subscriber_count_generator():
+       for yt_subscribers in rgt_youtube.live_subscriber_count_generator():
+           print(f"{yt_subscribers} on YouTube vs {sf_subscribers} on StoryFire.")
