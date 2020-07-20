@@ -1,7 +1,7 @@
 from setuptools import setup
 
 setup(name='socialblade',
-      version='1.0.3',
+      version='1.0.3.1',
       description='Object oriented SocialBlade API wrapper',
       long_description=open('README.rst', 'r').read() ,
       author='sl4v',
@@ -9,5 +9,5 @@ setup(name='socialblade',
       url='https://github.com/sl4vkek/python-socialblade',
       packages=['socialblade'],
       install_requires=['cloudscraper', 'dateparser'],
-      license="WTFPL"
+      license="UNLICENSE"
      )
