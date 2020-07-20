@@ -4,6 +4,38 @@ import dateparser
 from time import sleep
 import re
 
+class StoryFireUser:
+
+    def __init__(self, channel_id):
+        self.channel_id = channel_id
+        self.__s = cloudscraper.create_scraper()
+
+    def get_subscriber_count(self):
+        """
+        :return: The StoryFire user's subscriber count
+        """
+        return int(
+            self.__s.get(
+                'https://bastet.socialblade.com/storyfire/lookup',
+                params={
+                    'query': self.channel_id
+                }
+            ).content.decode()
+        )
+
+    def live_subscriber_count_generator(self, request_delay=1000):
+        """
+        :param request_delay: delay between each subscriber yield in milliseconds (defaults to 1000)
+        :yield: the StoryFire user's subscriber count in an infinite loop
+        """
+        while True:
+            try:
+                yield self.get_follower_count()
+                sleep(request_delay)
+            except ValueError:
+                pass
+
+
 class TwitchUser:
     
     def __init__(self, tag):
@@ -11,6 +43,7 @@ class TwitchUser:
         response = self.__s.get(f"https://socialblade.com/twitch/user/{tag}/realtime").text
         matches = re.search(r"<p id=\"rawUser\" style=\"display: none;\">(.+)</p>", response)
         self.channel_id = matches.groups(1)[0]
+    
     def get_follower_count(self):
         """
         :return: The Twitch user's follower count
@@ -23,6 +56,7 @@ class TwitchUser:
                 }
             ).content.decode()
         )
+    
     def live_follower_count_generator(self, request_delay=1000):
         """
         :param request_delay: delay between each follower yield in milliseconds (defaults to 1000)
@@ -45,7 +79,7 @@ class TwitterUser:
         """
         :return: The twitter user's follower count
         """
-        return int(Used a wee bit of regular expressions in order to get the ID of the Twitch user and then went on to nearly copypaste the TwitterUser class.
+        return int(
             self.__s.get(
                 'https://bastet.socialblade.com/twitter/lookup',
                 params={
