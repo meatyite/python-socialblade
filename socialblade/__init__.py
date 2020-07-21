@@ -30,7 +30,7 @@ class StoryFireUser:
         """
         while True:
             try:
-                yield self.get_follower_count()
+                yield self.get_subscriber_count()
                 sleep(request_delay)
             except ValueError:
                 pass
