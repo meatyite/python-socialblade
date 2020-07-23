@@ -5,6 +5,7 @@ from time import sleep
 import re
 
 class StoryFireUser:
+    """Warning: Please be aware that StoryFire support is currently unstable and will not always yield desired results.""""
 
     def __init__(self, channel_id):
         self.channel_id = channel_id
@@ -23,7 +24,7 @@ class StoryFireUser:
             ).content.decode()
         )
 
-    def live_subscriber_count_generator(self, request_delay=1000):
+    def live_subscriber_count_generator(self, request_delay=10000):
         """
         :param request_delay: delay between each subscriber yield in milliseconds (defaults to 1000)
         :yield: the StoryFire user's subscriber count in an infinite loop
