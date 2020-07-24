@@ -1,7 +1,7 @@
 from setuptools import setup
 
 setup(name='socialblade',
-      version='1.0.4.9',
+      version='1.0.5',
       description='Object oriented SocialBlade API wrapper',
       long_description=open('README.rst', 'r').read() ,
       author='sl4v',
