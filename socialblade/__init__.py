@@ -57,7 +57,7 @@ class StoryFireUser:
             ).content.decode()
         )
 
-    def live_subscriber_count_generator(self, request_delay=10000):
+    def live_subscriber_count_generator(self, request_delay=1000):
         """
         :param request_delay: delay between each subscriber yield in milliseconds (defaults to 1000)
         :yield: the StoryFire user's subscriber count in an infinite loop
