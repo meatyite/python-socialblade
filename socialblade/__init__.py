@@ -4,7 +4,41 @@ import dateparser
 from time import sleep
 import re
 
+class DailymotionUser:
+    
+    def __init__(self, tag):
+        self.__s = cloudscraper.create_scraper()
+        response = self.__s.get(f"https://socialblade.com/dailymotion/user/{tag}/realtime").text
+        matches = re.search(r"<p id=\"rawUser\" style=\"display: none;\">(.+)</p>", response)
+        self.channel_id = matches.groups(1)[0]
+    
+    def get_follower_count(self):
+        """
+        :return: The Dailymotion user's follower count
+        """
+        return int(
+            self.__s.get(
+                'https://bastet.socialblade.com/dailymotion/lookup',
+                params={
+                    'query': self.channel_id
+                }
+            ).content.decode()
+        )
+    
+    def live_follower_count_generator(self, request_delay=1000):
+        """
+        :param request_delay: delay between each follower yield in milliseconds (defaults to 1000)
+        :yield: the Dailymotion user's follower count in an infinite loop
+        """
+        while True:
+            try:
+                yield self.get_follower_count()
+                sleep(request_delay)
+            except ValueError:
+                pass
+
 class StoryFireUser:
+    """Warning: Please be aware that StoryFire support is currently unstable and will not always yield desired results.""""
 
     def __init__(self, channel_id):
         self.channel_id = channel_id
@@ -23,7 +57,7 @@ class StoryFireUser:
             ).content.decode()
         )
 
-    def live_subscriber_count_generator(self, request_delay=1000):
+    def live_subscriber_count_generator(self, request_delay=10000):
         """
         :param request_delay: delay between each subscriber yield in milliseconds (defaults to 1000)
         :yield: the StoryFire user's subscriber count in an infinite loop
