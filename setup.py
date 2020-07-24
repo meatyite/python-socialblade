@@ -1,11 +1,11 @@
 from setuptools import setup
 
 setup(name='socialblade',
-      version='1.0.4.3',
+      version='1.0.4.9',
       description='Object oriented SocialBlade API wrapper',
       long_description=open('README.rst', 'r').read() ,
       author='sl4v',
-      author_email='iamsl4v@protonmail.com',
+      author_email='iamsl4v@gmail.com',
       url='https://github.com/sl4vkek/python-socialblade',
       packages=['socialblade'],
       install_requires=['cloudscraper', 'dateparser'],

@@ -75,7 +75,7 @@ You could get a Twitter user's live follower count similer to how you get a yout
 from socialblade import TwitterUser
 
 
-donald_trump_twitter = TwitterUser('realdonaldtrump')
+donald_trump_twitter = TwitterUser('realdonaldtrump').initalize()
 
 for follower in donald_trump_twitter.live_follower_count_generator(request_delay=500):
     print(follower)
@@ -85,21 +85,22 @@ You could also get the follower count as it is at the moment, like so:
 from socialblade import TwitterUser
 
 
-donald_trump_twitter = TwitterUser('realdonaldtrump')
+donald_trump_twitter = TwitterUser('realdonaldtrump').initalize()
 
 print(donald_trump_twitter.get_follower_count())
 ```
 ### Get live Twitch and StoryFire follower counts
 Like Twitter, Twitch and StoryFire functionality is also limited to retrieving follower counts.
-You could compare the follower counts of a user's multiple platforms, whether that be Twitch and Twitter...:
+You could compare the follower counts of a user's multiple platforms, whether that be Twitch and Twitter...:<br/>
+*WARNING: Twitch, Dailymotion and StoryFire may or may not work. We are still working on this issue*
 ```python
 from socialblade import TwitterUser, TwitchUser
 
 
 user = 'michaelreeves'
 
-reeves_twitter = TwitterUser(user)
-reeves_twitch = TwitchUser(user)
+reeves_twitter = TwitterUser(user).initalize()
+reeves_twitch = TwitchUser(user).initalize()
 
 twitter_followers = reeves_twitter.get_follower_count()
 twitch_followers = reeves_twitch.get_follower_count()
@@ -114,10 +115,10 @@ else:
 from socialblade import YouTubeChannel, StoryFireUser
 
 
-rgt_youtube = YouTubeChannel('UCA5RGaQc-a8tIX_AqTTmWdw')
-rgt_storyfire = StoryFireUser('1fozx1kcs0tuj3')
+rgt_youtube = YouTubeChannel('UCA5RGaQc-a8tIX_AqTTmWdw').initalize()
+rgt_storyfire = StoryFireUser('1fozx1kcs0tuj3').initalize()
 
-for sf_subscribers in rgt_storyfire.live_subscriber_count_generator():
+for sf_subscribers in rgt_storyfire.live_follower_counter():
     for yt_subscribers in rgt_youtube.live_subscriber_count_generator():
         print(f"{yt_subscribers} on YouTube vs {sf_subscribers} on StoryFire.")
 ```
@@ -126,9 +127,9 @@ for sf_subscribers in rgt_storyfire.live_subscriber_count_generator():
 from socialblade import DailymotionUser
 
 
-newsy = DailymotionUser('newsy')
+newsy = DailymotionUser('newsy').initalize()
 print(newsy.get_follower_count())
 
-for follower in newsy.live_follower_count_generator(request_delay=500):
+for follower in newsy.live_follower_counter(request_delay=500):
     print(follower)
 ```

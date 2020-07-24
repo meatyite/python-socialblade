@@ -4,134 +4,80 @@ import dateparser
 from time import sleep
 import re
 
-class DailymotionUser:
-    
-    def __init__(self, tag):
+
+class FollowerCounter:
+
+    def __init__(self, tag, lookup_url, regex, regex_url=None):
         self.__s = cloudscraper.create_scraper()
-        response = self.__s.get(f"https://socialblade.com/dailymotion/user/{tag}/realtime").text
-        matches = re.search(r"<p id=\"rawUser\" style=\"display: none;\">(.+)</p>", response)
-        self.channel_id = matches.groups(1)[0]
-    
-    def get_follower_count(self):
-        """
-        :return: The Dailymotion user's follower count
-        """
-        return int(
-            self.__s.get(
-                'https://bastet.socialblade.com/dailymotion/lookup',
-                params={
-                    'query': self.channel_id
-                }
-            ).content.decode()
-        )
-    
-    def live_follower_count_generator(self, request_delay=1000):
-        """
-        :param request_delay: delay between each follower yield in milliseconds (defaults to 1000)
-        :yield: the Dailymotion user's follower count in an infinite loop
-        """
-        while True:
-            try:
-                yield self.get_follower_count()
-                sleep(request_delay)
-            except ValueError:
-                pass
-
-class StoryFireUser:
-
-    def __init__(self, channel_id):
-        self.channel_id = channel_id
-        self.__s = cloudscraper.create_scraper()
-
-    def get_subscriber_count(self):
-        """
-        :return: The StoryFire user's subscriber count
-        """
-        return int(
-            self.__s.get(
-                'https://bastet.socialblade.com/storyfire/lookup',
-                params={
-                    'query': self.channel_id
-                }
-            ).content.decode()
-        )
-
-    def live_subscriber_count_generator(self, request_delay=1000):
-        """
-        :param request_delay: delay between each subscriber yield in milliseconds (defaults to 1000)
-        :yield: the StoryFire user's subscriber count in an infinite loop
-        """
-        while True:
-            try:
-                yield self.get_subscriber_count()
-                sleep(request_delay)
-            except ValueError:
-                pass
-
-
-class TwitchUser:
-    
-    def __init__(self, tag):
-        self.__s = cloudscraper.create_scraper()
-        response = self.__s.get(f"https://socialblade.com/twitch/user/{tag}/realtime").text
-        matches = re.search(r"<p id=\"rawUser\" style=\"display: none;\">(.+)</p>", response)
-        self.channel_id = matches.groups(1)[0]
-    
-    def get_follower_count(self):
-        """
-        :return: The Twitch user's follower count
-        """
-        return int(
-            self.__s.get(
-                'https://bastet.socialblade.com/twitch/lookup',
-                params={
-                    'query': self.channel_id
-                }
-            ).content.decode()
-        )
-    
-    def live_follower_count_generator(self, request_delay=1000):
-        """
-        :param request_delay: delay between each follower yield in milliseconds (defaults to 1000)
-        :yield: the Twitch user's follower count in an infinite loop
-        """
-        while True:
-            try:
-                yield self.get_follower_count()
-                sleep(request_delay)
-            except ValueError:
-                pass
-
-class TwitterUser:
-
-    def __init__(self, tag):
+        self.lookup_url = lookup_url
+        if regex:
+            response = self.__s.get(regex_url.replace('{tag}', tag)).text
+            matches = re.search(r"<p id=\"rawUser\" style=\"display: none;\">(.+)</p>", response)
+            tag = matches.groups(1)[0]
         self.tag = tag
-        self.__s = cloudscraper.create_scraper()
 
     def get_follower_count(self):
-        """
-        :return: The twitter user's follower count
-        """
         return int(
             self.__s.get(
-                'https://bastet.socialblade.com/twitter/lookup',
+                self.lookup_url,
                 params={
                     'query': self.tag
                 }
             ).content.decode()
         )
 
-    def live_follower_count_generator(self, request_delay=1000):
-        """
-        :param request_delay: delay between each follower yield in milliseconds (defaults to 1000)
-        :yield: the twitter user's follower count in an infinite loop
-        """
+    def fail_safe_get_follower_count(self):
+        while True:
+            try:
+                follower_count = self.get_follower_count()
+                return follower_count
+            except ValueError:
+                pass
+
+    def live_follower_counter(self, request_delay=500):
         while True:
             try:
                 yield self.get_follower_count()
                 sleep(request_delay)
             except ValueError:
                 pass
+
+
+class DailymotionUser(FollowerCounter):
+    
+    def __init__(self, tag):
+        super().__init__(tag, lookup_url='https://bastet.socialblade.com/dailymotion/lookup', regex=True,
+                         regex_url="https://socialblade.com/dailymotion/user/{tag}/realtime")
+
+    def initalize(self):
+        return super()
+
+
+class StoryFireUser(FollowerCounter):
+
+    def __init__(self, channel_id):
+        super().__init__(tag=channel_id, lookup_url='https://bastet.socialblade.com/storyfire/lookup', regex=False)
+
+    def initalize(self):
+        return super()
+
+
+class TwitchUser(FollowerCounter):
+    
+    def __init__(self, tag):
+        super().__init__(tag, lookup_url='https://bastet.socialblade.com/twitch/lookup', regex=True, regex_url="https://socialblade.com/twitch/user/{tag}/realtime")
+
+    def initalize(self):
+        return super()
+
+
+class TwitterUser(FollowerCounter):
+
+    def __init__(self, tag):
+        super().__init__(tag, lookup_url='https://bastet.socialblade.com/twitter/lookup', regex=False)
+
+    def initalize(self):
+        return super()
 
 
 class YouTubeVideo:
