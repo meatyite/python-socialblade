@@ -153,3 +153,15 @@ user's multiple platforms, whether that be Twitch and Twitter...:
    for sf_subscribers in rgt_storyfire.live_subscriber_count_generator():
        for yt_subscribers in rgt_youtube.live_subscriber_count_generator():
            print(f"{yt_subscribers} on YouTube vs {sf_subscribers} on StoryFire.")
+.. _get-live-dailymotion-follower-counts:
+
+Get live Dailymotion follower counts.
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code:: python
+
+   from socialblade import DailymotionUser
+   newsy = DailymotionUser('newsy')
+   print(newsy.get_follower_count())
+   for follower in newsy.live_follower_count_generator(request_delay=500):
+       print(follower)
