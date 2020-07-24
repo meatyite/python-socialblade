@@ -103,7 +103,7 @@ get a youtuber's live follower count:
 
     donald_trump_twitter = TwitterUser('realdonaldtrump').initalize()
 
-    for follower in donald_trump_twitter.live_follower_count_generator(request_delay=500):
+    for follower in donald_trump_twitter.live_follower_counter(request_delay=500):
         print(follower)
 
 You could also get the follower count as it is at the moment, like so:
