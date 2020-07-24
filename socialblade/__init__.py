@@ -38,7 +38,6 @@ class DailymotionUser:
                 pass
 
 class StoryFireUser:
-    """Warning: Please be aware that StoryFire support is currently unstable and will not always yield desired results.""""
 
     def __init__(self, channel_id):
         self.channel_id = channel_id
