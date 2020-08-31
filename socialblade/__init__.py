@@ -175,7 +175,7 @@ class YouTubeChannel:
                 {
                     'query': self.channel_id
                 }
-            ).content.decode()
+            ).content.decode().strip().replace("'", '')
         )
 
     def live_subscriber_count_generator(self, request_delay=1000):
